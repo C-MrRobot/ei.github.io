@@ -226,7 +226,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ei.github.io/archives/2021/11/">November 2021</a><span class="archive-list-count">9</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ei.github.io/archives/2021/11/">November 2021</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -260,10 +260,10 @@
                 
               </p>
               <p class="item-title">
-                <a href="/ei.github.io/2021/11/17/Yarn%E8%B0%83%E5%BA%A6%E5%8E%9F%E7%90%86/" class="title">Yarn调度原理</a>
+                <a href="/ei.github.io/2021/11/17/Hive%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" class="title">Hive从入门到精通</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-11-17T15:25:15.000Z" itemprop="datePublished">2021-11-17</time>
+                <time datetime="2021-11-17T15:23:17.000Z" itemprop="datePublished">2021-11-17</time>
               </p>
             </div>
           </li>
@@ -275,40 +275,10 @@
                 
               </p>
               <p class="item-title">
-                <a href="/ei.github.io/2021/11/17/Kafka%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" class="title">Kafka从入门到精通</a>
+                <a href="/ei.github.io/2021/11/17/hello-world/" class="title">Hello World</a>
               </p>
               <p class="item-date">
-                <time datetime="2021-11-17T15:24:14.000Z" itemprop="datePublished">2021-11-17</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/ei.github.io/2021/11/17/Hbase%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" class="title">Hbase从入门到精通</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-11-17T15:24:01.000Z" itemprop="datePublished">2021-11-17</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/ei.github.io/2021/11/17/Spark%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" class="title">Spark从入门到精通</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-11-17T15:23:47.000Z" itemprop="datePublished">2021-11-17</time>
+                <time datetime="2021-11-17T13:54:34.971Z" itemprop="datePublished">2021-11-17</time>
               </p>
             </div>
           </li>
@@ -359,7 +329,7 @@
         <p>1:本地安装Hexo环境<br>#apt install nodejs-lts<br>#npm install -g hexo-cli<br>#npm install hexo-deployer-git<br>#npm g<br>#npm d</p>
 <p>2:本地准备部署工具<br>#apk install openssh git vim </p>
 <p>3:生成ssh公钥<br>#ssh-keygen -t rsa -C “user.email”</p>
-<p>4:Github环境准备<br>a.设置中先添加ssh公钥<br>b.创建github仓库 命名:username.github.io<br>c.git clone 仓库到本地目录<br>d.复制本地blog目录下的文件到仓库中<br>e.修改:’_config.yml’ 文件，末尾添加如下信息:<br>“deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#x75;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#x75;&#98;&#46;&#x63;&#111;&#109;</a>:C-MrRobot/ei.github.io.git<br>  branch: main “  注意:github默认是main分支<br>f.在clone下来的仓库中添加插件，配置githubconfig<br>#npm install hexo-deployer-git<br>#git config –global core.autocrlf false<br>#git config –global user.email “useremail”<br>#git config –global user.name “username”<br>g.推送代码到github<br>#hexo g &amp; hexo d<br>h.前往github 仓库中的设置配置git pages页面，选择要显示的分支保存即可<br>注意:仓库属性为public 公开的才能提供页面服务，private 私有仓库不能显示，每改变一次仓库属性，需要重新配置git pages。</p>
+<p>4:Github环境准备<br>a.设置中先添加ssh公钥<br>b.创建github仓库 命名:username.github.io<br>c.git clone 仓库到本地目录<br>d.复制本地blog目录下的文件到仓库中<br>e.修改:’_config.yml’ 文件，末尾添加如下信息:<br>“deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#111;&#x6d;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#111;&#x6d;</a>:C-MrRobot/ei.github.io.git<br>  branch: main “  注意:github默认是main分支<br>f.在clone下来的仓库中添加插件，配置githubconfig<br>#npm install hexo-deployer-git<br>#git config –global core.autocrlf false<br>#git config –global user.email “useremail”<br>#git config –global user.name “username”<br>g.推送代码到github<br>#hexo g &amp; hexo d<br>h.前往github 仓库中的设置配置git pages页面，选择要显示的分支保存即可<br>注意:仓库属性为public 公开的才能提供页面服务，private 私有仓库不能显示，每改变一次仓库属性，需要重新配置git pages。</p>
 
       
     </div>
@@ -417,7 +387,7 @@
     
     
     <li class="next">
-      <a href="/ei.github.io/2021/11/17/Yarn%E8%B0%83%E5%BA%A6%E5%8E%9F%E7%90%86/" title="Yarn调度原理"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/ei.github.io/2021/11/17/Hive%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" title="Hive从入门到精通"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
