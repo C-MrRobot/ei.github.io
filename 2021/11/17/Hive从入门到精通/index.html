@@ -18,15 +18,15 @@
   
   
   <title>Hive从入门到精通 | Hexo</title>
-  <meta name="description" content="###Hive常用操作###beeline客户端命令：beeline –hiveconf  hive.server2.logging.operation.level&#x3D;NONEbeeline -f “test.sql”beeline -e  show databasesbeeline -n  username -p password -u jdbc:hive2:&#x2F;&#x2F;hs2.local:10012be">
+  <meta name="description" content="Hive常用操作beeline客户端命令：123456beeline --hiveconf  hive.server2.logging.operation.level&#x3D;NONEbeeline -f &quot;test.sql&quot;beeline -e  show databasesbeeline -n  username -p password -u jdbc:hive2:&#x2F;&#x2F;hs2.lo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive从入门到精通">
 <meta property="og:url" content="https://c-mrrobot.github.io/ei.github.io/2021/11/17/Hive%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">
 <meta property="og:site_name" content="Bigdata大数据">
-<meta property="og:description" content="###Hive常用操作###beeline客户端命令：beeline –hiveconf  hive.server2.logging.operation.level&#x3D;NONEbeeline -f “test.sql”beeline -e  show databasesbeeline -n  username -p password -u jdbc:hive2:&#x2F;&#x2F;hs2.local:10012be">
+<meta property="og:description" content="Hive常用操作beeline客户端命令：123456beeline --hiveconf  hive.server2.logging.operation.level&#x3D;NONEbeeline -f &quot;test.sql&quot;beeline -e  show databasesbeeline -n  username -p password -u jdbc:hive2:&#x2F;&#x2F;hs2.lo">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-17T15:23:17.000Z">
-<meta property="article:modified_time" content="2021-11-18T12:00:17.002Z">
+<meta property="article:modified_time" content="2021-11-19T15:07:45.025Z">
 <meta property="article:author" content="MrRobot.C">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -326,13 +326,83 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>###Hive常用操作###<br>beeline客户端命令：<br>beeline –hiveconf  hive.server2.logging.operation.level=NONE<br>beeline -f “test.sql”<br>beeline -e  show databases<br>beeline -n  username -p password -u jdbc:hive2://hs2.local:10012<br>beeline -u  jdbc:hive2://192.168.0.76:10000 -n postgres<br>beeline –hiveconf  ‘hive.server2.tez.initialize.default.sessions=true’  ‘hive.cli.print.header=false’   -e   ‘sql’<br>describe formated  table_name;<br>show create database $dbname;<br>show create table $tablename;<br>drop  database  myhive  cascade; （删库删表，慎用）<br>TRUNCATE TABLE  Tablename; 删表数据<br>describe database bigdata;<br>###Hive常用语法###<br>修改执行引擎: <br>       set hive.execution.engine=spark;<br>修改hive 提交队列：     <br>       set mapreduce.job.queuename=default<br>修改hive表的ower：<br>       ALTER TABLE $table_name SET OWNER user $username;<br>修改表的序列化：<br>       ALTER TABLE  $tablename set SERDE “org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe”;  (RCFlie)<br>修改表存储格式：<br>       ALTER TABLE $tablename SET FILEFORMAT<br>       INPUTFORMAT “org.apache.hadoop.hive.ql.io.RCFileInputFormat”<br>       OUTPUTFORMAT “org.apache.hadoop.hive.ql.io.RCFileOutputFormat”;<br>修改存储路径：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/weijiqian/p/14335772.html">https://www.cnblogs.com/weijiqian/p/14335772.html</a> <br>       ALTER TABLE $table_name  set location ‘/hive/warehouse/test.db/tb_table2<br>‘;</p>
-<p>###Hive metastore元数据操作###<br>find / -name gsql<br>./gsql -p 20051  -d hivemeta -U omm -W dbserverAdmin@123 <br>     查询表结构： select pg_get_tabledef(‘public.HUE_PERMISSION_id_SEQ’)<br>hive默认元数据为DBserver服务。<br>omm 管理员密码：dbserverAdmin@123<br>hive 密码：HiveUser@<br>如果被锁需解锁，语句：ALTER USER hive ACCOUNT UNLOCK</p>
-<p>###Hive调优###<br>性能优化：<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/cmpntguide-mrs/mrs_01_0979.html">https://support.huaweicloud.com/cmpntguide-mrs/mrs_01_0979.html</a><br>     SET spark.sql.hive.convertMetastoreParquet = false;<br>     spark自带的序列化方式无法解析hive中的parquet数据，便读不到数据，此时可以将这个参数设置为false。</p>
-<p>A:  yarn<br>    yarn.nodemanager.resource.cpu-vcores 调整每个nodemanager占用core节点的cpu核数<br>    yarn.nodemanager.resource.memory-mb 调整每个nodemanager占用core节点的memory数<br>    yarn.scheduler.minimum-allocation-mb 每个contain最小申请的内存<br>    yarn.scheduler.maximum-allocation-mb 每个contain最大申请的内存<br>    yarn.scheduler.minimum-allocation-vcores 每个contain最小申请的核数<br>    yarn.scheduler.maximum-allocation-vcores 每个contain最大申请的核数<br>    mapreduce.map.memory.mb： 每个map任务内存量<br>    mapreduce.map.cpu.vcores 每个map任务cpu数量</p>
-<p>B:  MR<br>    set mapred.min.split.size=1; <br>    set mapred.max.split.size=128000000; 增大map task的数量 <br>    set mapred.map.tasks=2； 增大map task的数量 ，无用！！<br>    set mapred.reduce.tasks=1000; 增大reduce task的数量<br>    mapreduce.map.memory.mb 每个Map task设置map的最大内存<br>    mapreduce.reduce.memory.mb 每个Reduce task设置reduce的最大内存</p>
-<p>C: TEZ<br>   1.set hive.tez.cpu.vcores=3 设置每个task的cpu使用<br>   2.如果tez是contain模式，尽量调节contain的数量，因为contain多了，那么里面运行的task也多了，并行度就上来了</p>
-<p>###Hive实战###<br>create table bigdata.eimrs(id string,name string,worker string,happies string,age int);<br>insert into table bigdata.eimrs values(“0”,”张三”,”程序员”,”踢足球”,30);<br>insert into table bigdata.eimrs values(“1”,”李四”,”艺术家”,”打篮球”,28);<br>insert into table bigdata.eimrs  values(“2”,”王五”,”程序员”,”乒乓球”,32);<br>insert into table bigdata.eimrs  values(“3”,”成哥”,”程序员”,”铅球”,32);<br>2：创建外部表：<br>create external table student (s_id string,s_name string) row format delimited fields terminated by ‘\t’;<br>create external table bigdata.eimrs0(id string comment “id”,name string comment “名称”,teacher string comment “授课老师信息”)<br>comment “测试JSON格式外部表”<br>row format serde ‘org.apache.hive.hcatalog.data.JsonSerDe’<br>stored as textfile;<br>3：创建分区表：<br>create table score2 (s_id string, s_score int) partitioned by (year string,month string,day string);<br>insert into table score2 partition(year=’2021’,month=’01’,day=’01’) values(“1”,20);:<br>4：创建表指定obs 路径：<br>create database if not exists $database_name  location  “obs://桶/目录/“;<br>create table test(name string) location “obs://桶/user/hive/warehouse/test”;<br>5：load本地数据：<br>追加操作<br>load data local inpath ‘/export/servers/hivedatas/student.csv’ into table student;<br>覆盖操作：<br>load data local inpath ‘/export/servers/hivedatas/student.csv’ overwrite  into table student;<br>6：loadHDFS数据：<br>load data inpath ‘/hivedatas/techer.csv’ into table techer;<br>load data inpath ‘/hivedatas/techer.csv’ into table techer partition(cur_date=20201210);  （load到指定分区）<br>7：修改hive表的ower：<br>ALTER TABLE $table_name SET OWNER user $username;<br>8：修改存储路径：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/weijiqian/p/14335772.html">https://www.cnblogs.com/weijiqian/p/14335772.html</a> <br>ALTER TABLE $table_name SET location ‘/hive/warehouse/test.db/tb_table2’;！</p>
+        <h2 id="Hive常用操作"><a href="#Hive常用操作" class="headerlink" title="Hive常用操作"></a>Hive常用操作</h2><h3 id="beeline客户端命令："><a href="#beeline客户端命令：" class="headerlink" title="beeline客户端命令："></a>beeline客户端命令：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">beeline --hiveconf  hive.server2.logging.operation.level=NONE</span><br><span class="line">beeline -f <span class="string">&quot;test.sql&quot;</span></span><br><span class="line">beeline -e  show databases</span><br><span class="line">beeline -n  username -p password -u jdbc:hive2://hs2.local:10012</span><br><span class="line">beeline -u  jdbc:hive2://192.168.0.76:10000 -n postgres</span><br><span class="line">beeline --hiveconf  <span class="string">&#x27;hive.server2.tez.initialize.default.sessions=true&#x27;</span>  <span class="string">&#x27;hive.cli.print.header=false&#x27;</span>   -e   <span class="string">&#x27;sql&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">describe</span> formated  table_name;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> database $dbname;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> $tablename;</span><br><span class="line"><span class="keyword">drop</span>  database  myhive  cascade; （删库删表，慎用）</span><br><span class="line"><span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span>  Tablename; 删表数据</span><br><span class="line"><span class="keyword">describe</span> database bigdata;</span><br></pre></td></tr></table></figure>
+<h2 id="Hive常用语法"><a href="#Hive常用语法" class="headerlink" title="Hive常用语法"></a>Hive常用语法</h2><h3 id="修改执行引擎"><a href="#修改执行引擎" class="headerlink" title="修改执行引擎:"></a>修改执行引擎:</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> hive.execution.engine<span class="operator">=</span>spark;</span><br></pre></td></tr></table></figure>
+<h3 id="修改hive-提交队列："><a href="#修改hive-提交队列：" class="headerlink" title="修改hive 提交队列："></a>修改hive 提交队列：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.queuename<span class="operator">=</span><span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+<h3 id="修改hive表的ower："><a href="#修改hive表的ower：" class="headerlink" title="修改hive表的ower："></a>修改hive表的ower：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> $table_name <span class="keyword">SET</span> OWNER <span class="keyword">user</span> $username;</span><br></pre></td></tr></table></figure>
+<h3 id="修改表的序列化"><a href="#修改表的序列化" class="headerlink" title="修改表的序列化"></a>修改表的序列化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE $tablename set SERDE &quot;org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe&quot;;  (RCFlie)</span><br></pre></td></tr></table></figure>
+<h3 id="修改表存储格式："><a href="#修改表存储格式：" class="headerlink" title="修改表存储格式："></a>修改表存储格式：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> $tablename <span class="keyword">SET</span> FILEFORMAT</span><br><span class="line">INPUTFORMAT “org.apache.hadoop.hive.ql.io.RCFileInputFormat”</span><br><span class="line">OUTPUTFORMAT “org.apache.hadoop.hive.ql.io.RCFileOutputFormat”;</span><br></pre></td></tr></table></figure>
+<h3 id="修改存储路径："><a href="#修改存储路径：" class="headerlink" title="修改存储路径："></a>修改存储路径：</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/weijiqian/p/14335772.html">https://www.cnblogs.com/weijiqian/p/14335772.html</a> </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> $table_name  <span class="keyword">set</span> location <span class="string">&#x27;/hive/warehouse/test.db/tb_table2&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Hive-metastore元数据操作"><a href="#Hive-metastore元数据操作" class="headerlink" title="Hive metastore元数据操作"></a>Hive metastore元数据操作</h3><pre><code class="bash">find / -name gsql
+./gsql -p 20051  -d hivemeta -U omm -W dbserverAdmin@123 
+```   
+### 查询表结构： 
+select pg_get_tabledef(&#39;public.HUE_PERMISSION_id_SEQ&#39;)
+hive默认元数据为DBserver服务。
+omm 管理员密码：dbserverAdmin@123
+hive 密码：HiveUser@
+如果被锁需解锁，语句：ALTER USER hive ACCOUNT UNLOCK
+
+###Hive调优###
+性能优化：https://support.huaweicloud.com/cmpntguide-mrs/mrs_01_0979.html
+     SET spark.sql.hive.convertMetastoreParquet = false;
+     spark自带的序列化方式无法解析hive中的parquet数据，便读不到数据，此时可以将这个参数设置为false。
+
+A:  yarn
+    yarn.nodemanager.resource.cpu-vcores 调整每个nodemanager占用core节点的cpu核数
+    yarn.nodemanager.resource.memory-mb 调整每个nodemanager占用core节点的memory数
+    yarn.scheduler.minimum-allocation-mb 每个contain最小申请的内存
+    yarn.scheduler.maximum-allocation-mb 每个contain最大申请的内存
+    yarn.scheduler.minimum-allocation-vcores 每个contain最小申请的核数
+    yarn.scheduler.maximum-allocation-vcores 每个contain最大申请的核数
+    mapreduce.map.memory.mb： 每个map任务内存量
+    mapreduce.map.cpu.vcores 每个map任务cpu数量
+
+B:  MR
+    set mapred.min.split.size=1; 
+    set mapred.max.split.size=128000000; 增大map task的数量 
+    set mapred.map.tasks=2； 增大map task的数量 ，无用！！
+    set mapred.reduce.tasks=1000; 增大reduce task的数量
+    mapreduce.map.memory.mb 每个Map task设置map的最大内存
+    mapreduce.reduce.memory.mb 每个Reduce task设置reduce的最大内存
+
+C: TEZ
+   1.set hive.tez.cpu.vcores=3 设置每个task的cpu使用
+   2.如果tez是contain模式，尽量调节contain的数量，因为contain多了，那么里面运行的task也多了，并行度就上来了
+
+###Hive实战###
+create table bigdata.eimrs(id string,name string,worker string,happies string,age int);
+insert into table bigdata.eimrs values(&quot;0&quot;,&quot;张三&quot;,&quot;程序员&quot;,&quot;踢足球&quot;,30);
+insert into table bigdata.eimrs values(&quot;1&quot;,&quot;李四&quot;,&quot;艺术家&quot;,&quot;打篮球&quot;,28);
+insert into table bigdata.eimrs  values(&quot;2&quot;,&quot;王五&quot;,&quot;程序员&quot;,&quot;乒乓球&quot;,32);
+insert into table bigdata.eimrs  values(&quot;3&quot;,&quot;成哥&quot;,&quot;程序员&quot;,&quot;铅球&quot;,32);
+2：创建外部表：
+create external table student (s_id string,s_name string) row format delimited fields terminated by &#39;\t&#39;;
+create external table bigdata.eimrs0(id string comment &quot;id&quot;,name string comment &quot;名称&quot;,teacher string comment &quot;授课老师信息&quot;)
+comment &quot;测试JSON格式外部表&quot;
+row format serde &#39;org.apache.hive.hcatalog.data.JsonSerDe&#39;
+stored as textfile;
+3：创建分区表：
+create table score2 (s_id string, s_score int) partitioned by (year string,month string,day string);
+insert into table score2 partition(year=&#39;2021&#39;,month=&#39;01&#39;,day=&#39;01&#39;) values(&quot;1&quot;,20);:
+4：创建表指定obs 路径：
+create database if not exists $database_name  location  &quot;obs://桶/目录/&quot;;
+create table test(name string) location &quot;obs://桶/user/hive/warehouse/test&quot;;
+5：load本地数据：
+追加操作
+load data local inpath &#39;/export/servers/hivedatas/student.csv&#39; into table student;
+覆盖操作：
+load data local inpath &#39;/export/servers/hivedatas/student.csv&#39; overwrite  into table student;
+6：loadHDFS数据：
+load data inpath &#39;/hivedatas/techer.csv&#39; into table techer;
+load data inpath &#39;/hivedatas/techer.csv&#39; into table techer partition(cur_date=20201210);  （load到指定分区）
+7：修改hive表的ower：
+ALTER TABLE $table_name SET OWNER user $username;
+8：修改存储路径：https://www.cnblogs.com/weijiqian/p/14335772.html 
+ALTER TABLE $table_name SET location &#39;/hive/warehouse/test.db/tb_table2&#39;;！
+</code></pre>
 
       
     </div>
