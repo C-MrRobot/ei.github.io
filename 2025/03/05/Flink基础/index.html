@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Flink基础 | Bigdata</title>
+  <meta name="description" content="Flink&amp;#x7406;&amp;#x8BBA;&amp;#x4ECB;&amp;#x7ECD;Flink&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x6279;&amp;#x5904;&amp;#x7406;&amp;#x548C;&amp;#x6D41;&amp;#x5904;&amp;#x7406;&amp;#x7ED3;&amp;#x5408;&amp;#x7684;&amp;#x7EDF;&amp;#x4E00;&amp;#x8BA1;&amp;#x7B97;&amp;#x6846;&amp;#x67B6;&amp;#xFF0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flink基础">
+<meta property="og:url" content="https://c-mrrobot.github.io/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Bigdata大数据">
+<meta property="og:description" content="Flink&amp;#x7406;&amp;#x8BBA;&amp;#x4ECB;&amp;#x7ECD;Flink&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x6279;&amp;#x5904;&amp;#x7406;&amp;#x548C;&amp;#x6D41;&amp;#x5904;&amp;#x7406;&amp;#x7ED3;&amp;#x5408;&amp;#x7684;&amp;#x7EDF;&amp;#x4E00;&amp;#x8BA1;&amp;#x7B97;&amp;#x6846;&amp;#x67B6;&amp;#xFF0">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-05T06:56:26.000Z">
+<meta property="article:modified_time" content="2025-03-06T03:42:36.421Z">
+<meta property="article:author" content="MrRobot.C">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://c-mrrobot.github.io/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Bigdata大数据" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/ei.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/C-MrRobot" target="_blank">
+          <img class="img-circle img-rotate" src="/ei.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">MrRobot.C</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Bigdata Devops</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Xi&#39;An, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/ei.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/ei.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/ei.github.io/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/ei.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/ei.github.io/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/ei.github.io/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/ei.github.io/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/ei.github.io/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/C-MrRobot" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/ei.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享大数据实践经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ei.github.io/archives/2025/03/">March 2025</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/ei.github.io/archives/2021/12/">December 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/ei.github.io/archives/2021/11/">November 2021</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/ei.github.io/2025/03/06/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-03-06T06:44:13.868Z" itemprop="datePublished">2025-03-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/ei.github.io/2025/03/06/Clickhouse%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/" class="title">Clickhouse由浅入深</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-03-06T03:22:33.000Z" itemprop="datePublished">2025-03-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/ei.github.io/2025/03/06/Yarn%E5%9F%BA%E7%A1%80/" class="title">Yarn基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-03-06T03:15:04.000Z" itemprop="datePublished">2025-03-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/" class="title">Flink基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-03-05T06:56:26.000Z" itemprop="datePublished">2025-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/ei.github.io/2021/12/11/Spark%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/" class="title">Spark由浅入深</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-11T13:06:57.000Z" itemprop="datePublished">2021-12-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Flink基础" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flink基础
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/" class="article-date">
+	  <time datetime="2025-03-05T06:56:26.000Z" itemprop="datePublished">2025-03-05</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="Flink&#x7406;&#x8BBA;&#x4ECB;&#x7ECD;"><a href="#Flink&#x7406;&#x8BBA;&#x4ECB;&#x7ECD;" class="headerlink" title="Flink&#x7406;&#x8BBA;&#x4ECB;&#x7ECD;"></a>Flink&#x7406;&#x8BBA;&#x4ECB;&#x7ECD;</h2><p>Flink&#x662F;&#x4E00;&#x4E2A;&#x6279;&#x5904;&#x7406;&#x548C;&#x6D41;&#x5904;&#x7406;&#x7ED3;&#x5408;&#x7684;&#x7EDF;&#x4E00;&#x8BA1;&#x7B97;&#x6846;&#x67B6;&#xFF0C;&#x5176;&#x6838;&#x5FC3;&#x662F;&#x4E00;&#x4E2A;&#x63D0;&#x4F9B;&#x4E86;&#x6570;&#x636E;&#x5206;&#x53D1;&#x4EE5;&#x53CA;&#x5E76;&#x884C;&#x5316;&#x8BA1;&#x7B97;&#x7684;&#x6D41;&#x6570;&#x636E;&#x5904;&#x7406;&#x5F15;&#x64CE;&#x3002;&#x5B83;&#x7684;&#x6700;&#x5927;&#x4EAE;&#x70B9;&#x662F;&#x6D41;&#x5904;&#x7406;&#xFF0C;&#x662F;&#x4E1A;&#x754C;&#x6700;&#x9876;&#x7EA7;&#x7684;&#x5F00;&#x6E90;&#x6D41;&#x5904;&#x7406;&#x5F15;&#x64CE;&#x3002;<br>Flink&#x6700;&#x9002;&#x5408;&#x7684;&#x5E94;&#x7528;&#x573A;&#x666F;&#x662F;&#x4F4E;&#x65F6;&#x5EF6;&#x7684;&#x6570;&#x636E;&#x5904;&#x7406;&#xFF08;Data Processing&#xFF09;&#x573A;&#x666F;&#xFF1A;&#x9AD8;&#x5E76;&#x53D1;pipeline&#x5904;&#x7406;&#x6570;&#x636E;&#xFF0C;&#x65F6;&#x5EF6;&#x6BEB;&#x79D2;&#x7EA7;&#xFF0C;&#x4E14;&#x517C;&#x5177;&#x53EF;&#x9760;&#x6027;&#x3002;</p>
+<p>Flink&#x6574;&#x4E2A;&#x7CFB;&#x7EDF;&#x5305;&#x542B;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;<br>Client<br>Flink Client&#x4E3B;&#x8981;&#x7ED9;&#x7528;&#x6237;&#x63D0;&#x4F9B;&#x5411;Flink&#x7CFB;&#x7EDF;&#x63D0;&#x4EA4;&#x7528;&#x6237;&#x4EFB;&#x52A1;&#xFF08;&#x6D41;&#x5F0F;&#x4F5C;&#x4E1A;&#xFF09;&#x7684;&#x80FD;&#x529B;&#x3002;<br>TaskManager<br>Flink&#x7CFB;&#x7EDF;&#x7684;&#x4E1A;&#x52A1;&#x6267;&#x884C;&#x8282;&#x70B9;&#xFF0C;&#x6267;&#x884C;&#x5177;&#x4F53;&#x7684;&#x7528;&#x6237;&#x4EFB;&#x52A1;&#x3002;TaskManager&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#xFF0C;&#x5404;&#x4E2A;TaskManager&#x90FD;&#x5E73;&#x7B49;&#x3002;<br>JobManager<br>Flink&#x7CFB;&#x7EDF;&#x7684;&#x7BA1;&#x7406;&#x8282;&#x70B9;&#xFF0C;&#x7BA1;&#x7406;&#x6240;&#x6709;&#x7684;TaskManager&#xFF0C;&#x5E76;&#x51B3;&#x7B56;&#x7528;&#x6237;&#x4EFB;&#x52A1;&#x5728;&#x54EA;&#x4E9B;TaskManager&#x6267;&#x884C;&#x3002;JobManager&#x5728;HA&#x6A21;&#x5F0F;&#x4E0B;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#xFF0C;&#x4F46;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x4E3B;JobManager&#x3002;</p>
+<h3 id="Flink&#x4F7F;&#x7528;"><a href="#Flink&#x4F7F;&#x7528;" class="headerlink" title="Flink&#x4F7F;&#x7528;"></a>Flink&#x4F7F;&#x7528;</h3><p>Pro-Job&#x6A21;&#x5F0F;<br>sql-client.sh embedded<br>set execution.target = yarn-per-job;<br>       set  execution.result-mode=tableau;</p>
+<p>yarn-session &#x6A21;&#x5F0F;<br>yarn-session.sh -t ssl/ -nm &#x201C;flink-hudi&#x201D; -d  &#x6216;&#x8005;<br>yarn-session.sh -nm &#x201C;flink-hudi&#x201D; -d</p>
+<p>sql-client.sh embedded<br>set high-availability.cluster-id=application_1703741461558_0011;<br>       set execution.result-mode=tableau;</p>
+<p>CREATE TABLE hudi_test(<br>uuid VARCHAR(20),<br>name VARCHAR(10),<br>age INT,<br>ts INT,<br><code>p</code> VARCHAR(20)<br>) PARTITIONED BY (<code>p</code>) WITH (<br>&#x2018;connector&#x2019; = &#x2018;hudi&#x2019;,<br>&#x2018;path&#x2019; = &#x2018;obs://dayu-ei-clg/Bigdata/hudi&#x2019;,<br>&#x2018;table.type&#x2019; = &#x2018;MERGE_ON_READ&#x2019;,<br>&#x2018;checkpoint.interval&#x2019; = &#x2018;10000&#x2019;,<br>&#x2018;checkpoint.mode&#x2019; = &#x2018;exactly-once&#x2019;,<br>&#x2018;checkpoint.timeout&#x2019; = &#x2018;60000&#x2019;<br>);</p>
+<p>insert into  hudi_test values(&#x2018;1000&#x2019;,&#x2019;zhangsan&#x2019;,20,30,&#x2019;2023-12-28&#x2019;);</p>
+<p>insert into hudi_test partition(p=&#x201D;20221020&#x201D;) values(&#x2018;1000&#x2019;,&#x2019;zhangsan&#x2019;,20,30);</p>
+<p>insert into  hudi_read_spark_mor values(&#x2018;1000&#x2019;,&#x2019;zhangsan&#x2019;,20,30,&#x2019;2023-12-28&#x2019;);</p>
+<p>CREATE TABLE hudi_test(<br>uuid VARCHAR(20),<br>name VARCHAR(10),<br>age INT,<br>ts INT,<br><code>p</code> VARCHAR(20)<br>) WITH (<br>&#x2018;connector&#x2019; = &#x2018;hudi&#x2019;,<br>&#x2018;path&#x2019; = &#x2018;obs://dayu-ei-clg/Bigdata/hudi100&#x2019;,<br>&#x2018;table.type&#x2019; = &#x2018;MERGE_ON_READ&#x2019;<br>);</p>
+<p>insert into  hudi_test values(&#x2018;1000&#x2019;,&#x2019;zhangsan&#x2019;,20,30,&#x2019;2023-12-28&#x2019;);</p>
+<p>CREATE TABLE hudi_test(<br>uuid VARCHAR(20),<br>name VARCHAR(10),<br>age INT,<br>ts INT,<br><code>p</code> VARCHAR(20)<br>) PARTITIONED BY (<code>p</code>) WITH (<br>&#x2018;connector&#x2019; = &#x2018;hudi&#x2019;,<br>&#x2018;path&#x2019; = &#x2018;obs://dayu-ei-clg/Bigdata/hudix&#x2019;,<br>&#x2018;table.type&#x2019; = &#x2018;MERGE_ON_READ&#x2019;<br>);</p>
+<p>insert into hudi_test partition(p=&#x2019;2023-12-28&#x2019;) values(&#x2018;1000&#x2019;,&#x2019;zhangsan&#x2019;,30,60);</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://c-mrrobot.github.io/ei.github.io/2025/03/05/Flink%E5%9F%BA%E7%A1%80/" title="Flink基础" target="_blank" rel="external">https://c-mrrobot.github.io/ei.github.io/2025/03/05/Flink基础/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/C-MrRobot" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/ei.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/C-MrRobot" target="_blank"><span class="text-dark">MrRobot.C</span><small class="ml-1x">Bigdata Devops</small></a></h3>
+        <div>Love life, like to study, keep improving technology</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/ei.github.io/2025/03/06/Yarn%E5%9F%BA%E7%A1%80/" title="Yarn基础"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/ei.github.io/2021/12/11/Spark%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/" title="Spark由浅入深"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/ei.github.io/images/donate/alipay.jpg" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/ei.github.io/images/donate/wechatpay.jpg" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/C-MrRobot" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/ei.github.io/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/ei.github.io/js/plugin.min.js"></script>
+
+
+<script src="/ei.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/ei.github.io/',
+        CONTENT_URL: '/ei.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/ei.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
